@@ -8,10 +8,10 @@ let currentPage = 1;
 
 // Storage keys
 const STORAGE_KEYS = {
-    API_ENDPOINT: 'lks_api_endpoint',
-    API_KEY: 'lks_api_key',
-    AWS_REGION: 'lks_aws_region',
-    DEBUG_MODE: 'lks_debug_mode'
+    API_ENDPOINT:  window.APP_CONFIG.API_ENDPOINT,
+    API_KEY:  window.APP_CONFIG.API_KEY,
+    AWS_REGION:  window.APP_CONFIG.REGION,
+    DEBUG_MODE:  window.APP_CONFIG.DEBUG_MODE
 };
 
 // Initialize app
