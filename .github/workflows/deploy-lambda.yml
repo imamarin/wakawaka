@@ -30,54 +30,54 @@ jobs:
 
       - name: Deploy order management Lambda
         run: |
-          cd lambdas/order-management
-          zip -r ../../order-management.zip .
+          cd lambda/order_management
+          zip -r ../../order_management.zip .
           cd ../..
           aws lambda update-function-code \
             --function-name lks-lambda-order-management \
-            --zip-file fileb://order-management.zip
+            --zip-file fileb://order_management.zip
 
       - name: Deploy process payment Lambda
         run: |
-          cd lambdas/process-payment
-          zip -r ../../process-payment.zip .
+          cd lambda/process_payment
+          zip -r ../../process_payment.zip .
           cd ../..
           aws lambda update-function-code \
             --function-name lks-lambda-process-payment \
-            --zip-file fileb://process-payment.zip
+            --zip-file fileb://process_payment.zip
 
       - name: Deploy update inventory Lambda
         run: |
-          cd lambdas/update-inventory
-          zip -r ../../update-inventory.zip .
+          cd lambda/update_inventory
+          zip -r ../../update_inventory.zip .
           cd ../..
           aws lambda update-function-code \
             --function-name lks-lambda-update-inventory \
-            --zip-file fileb://update-inventory.zip
+            --zip-file fileb://update_inventory.zip
 
       - name: Deploy send notification Lambda
         run: |
-          cd lambdas/send-notification
-          zip -r ../../send-notification.zip .
+          cd lambda/send_notification
+          zip -r ../../send_notification.zip .
           cd ../..
           aws lambda update-function-code \
             --function-name lks-lambda-send-notification \
-            --zip-file fileb://send-notification.zip
+            --zip-file fileb://send_notification.zip
 
       - name: Deploy generate report Lambda
         run: |
-          cd lambdas/generate-report
-          zip -r ../../generate-report.zip .
+          cd lambda/generate_report
+          zip -r ../../generate_report.zip .
           cd ../..
           aws lambda update-function-code \
             --function-name lks-lambda-generate-report \
-            --zip-file fileb://generate-report.zip
+            --zip-file fileb://generate_report.zip
 
       - name: Deploy init db Lambda
         run: |
-          cd lambdas/init-db
-          zip -r ../../init-db.zip .
+          cd lambda/init_database
+          zip -r ../../init_database.zip .
           cd ../..
           aws lambda update-function-code \
             --function-name lks-lambda-init-db \
-            --zip-file fileb://init-db.zip
+            --zip-file fileb://init_database.zip
