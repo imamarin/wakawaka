@@ -1,36 +1,83 @@
-name: Test AWS Credentials
+name: Deploy Lambda Functions
 
 on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'lambdas/**'
+      - '.github/workflows/deploy-lambda.yml'
   workflow_dispatch:
 
 jobs:
-  test-credentials:
+  deploy-lambdas:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check whether secrets are readable
-        env:
-          AK: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          SK: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          if [ -z "$AK" ]; then
-            echo "::error::AWS_ACCESS_KEY_ID tidak terbaca atau kosong"
-            exit 1
-          fi
-
-          if [ -z "$SK" ]; then
-            echo "::error::AWS_SECRET_ACCESS_KEY tidak terbaca atau kosong"
-            exit 1
-          fi
-
-          echo "Secrets terbaca oleh workflow"
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-
+          
       - name: Validate AWS identity
         run: aws sts get-caller-identity
+
+      - name: Deploy order management Lambda
+        run: |
+          cd lambda/order_management
+          zip -r ../../order_management.zip .
+          cd ../..
+          aws lambda update-function-code \
+            --function-name lks-lambda-order-management \
+            --zip-file fileb://order_management.zip
+
+      - name: Deploy process payment Lambda
+        run: |
+          cd lambda/process_payment
+          zip -r ../../process_payment.zip .
+          cd ../..
+          aws lambda update-function-code \
+            --function-name lks-lambda-process-payment \
+            --zip-file fileb://process_payment.zip
+
+      - name: Deploy update inventory Lambda
+        run: |
+          cd lambda/update_inventory
+          zip -r ../../update_inventory.zip .
+          cd ../..
+          aws lambda update-function-code \
+            --function-name lks-lambda-update-inventory \
+            --zip-file fileb://update_inventory.zip
+
+      - name: Deploy send notification Lambda
+        run: |
+          cd lambda/send_notification
+          zip -r ../../send_notification.zip .
+          cd ../..
+          aws lambda update-function-code \
+            --function-name lks-lambda-send-notification \
+            --zip-file fileb://send_notification.zip
+
+      - name: Deploy generate report Lambda
+        run: |
+          cd lambda/generate_report
+          zip -r ../../generate_report.zip .
+          cd ../..
+          aws lambda update-function-code \
+            --function-name lks-lambda-generate-report \
+            --zip-file fileb://generate_report.zip
+
+      - name: Deploy init db Lambda
+        run: |
+          cd lambda/init_database
+          zip -r ../../init_database.zip .
+          cd ../..
+          aws lambda update-function-code \
+            --function-name lks-lambda-init-db \
+            --zip-file fileb://init_database.zip
