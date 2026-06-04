@@ -12,7 +12,7 @@ frontend:
             API_KEY: '${API_KEY}',
             REGION: '${REGION}',
             DEBUG_MODE: '${DEBUG_MODE}'
-          };" > frontend/index.html
+          };" > frontend/app.js
   artifacts:
     baseDirectory: frontend
     files:
