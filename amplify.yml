@@ -13,7 +13,7 @@ frontend:
             DEBUG_MODE: "${DEBUG_MODE}"
           };
           EOF
-        - cat frontend/app.js
+        - cat frontend/index.html
   artifacts:
     baseDirectory: frontend
     files:
