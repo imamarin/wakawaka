@@ -267,7 +267,7 @@ async function loadDashboard() {
         // Show loading state
         const tableBody = document.getElementById('recent-orders-table');
         if (tableBody) {
-            tableBody.innerHTML = '<tr><td colspan="5" class="text-center"><div class="spinner-border spinner-border-sm"></div> Loading...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="5" class="text-center"><div class="spinner-border spinner-border-sm"></div> Loadingssss...</td></tr>';
         }
         
         // Load orders for dashboard
