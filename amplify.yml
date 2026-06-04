@@ -1,21 +1,20 @@
 version: 1
 frontend:
   phases:
-    preBuild:
-      commands:
-        - echo "Pre-build phase started"
     build:
       commands:
+        - echo "Generating app.js"
         - |
-          echo "window.APP_CONFIG = {
-            API_ENDPOINT: '${API_ENDPOINT}',
-            API_KEY: '${API_KEY}',
-            REGION: '${REGION}',
-            DEBUG_MODE: '${DEBUG_MODE}'
-          };" > frontend/app.js
+          cat > frontend/app.js << EOF
+          window.APP_CONFIG = {
+            API_ENDPOINT: "${API_ENDPOINT}",
+            API_KEY: "${API_KEY}",
+            REGION: "${REGION}",
+            DEBUG_MODE: "${DEBUG_MODE}"
+          };
+          EOF
+        - cat frontend/app.js
   artifacts:
     baseDirectory: frontend
     files:
       - '**/*'
-  cache:
-    paths: []
